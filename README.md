@@ -26,5 +26,5 @@ grunt jade
 ### compile as you edit!
 
 ```
-grunt watch
+grunt watch:jade
 ```
