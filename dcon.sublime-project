@@ -1,0 +1,12 @@
+{
+  "folders": [{
+    "path": ".",
+    "folder_exclude_patterns": ["dist", "docs", "public", "bower_components", "node_modules"],
+    "file_exclude_patterns": ["*.sublime-workspace", "*.rdb"]
+  }],
+  "settings": {
+    "gutter": true,
+    "highlight_line": true,
+    "show_minimap": false
+  }
+}

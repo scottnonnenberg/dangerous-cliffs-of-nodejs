@@ -1,0 +1,581 @@
+doctype
+html(lang='en')
+  head
+    meta(charset='utf-8')
+
+    title the dangerous cliffs of node.js
+
+    meta(name='description', content='Some common but surprisingly impactful or difficult to deal with errors in Node.js')
+    meta(name='author', content='Scott Nonnenberg')
+
+    meta(name='apple-mobile-web-app-capable', content='yes')
+    meta(name='apple-mobile-web-app-status-bar-style', content='black-translucent')
+
+    meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no')
+
+    link(rel='stylesheet', href='css/reveal.min.css')
+    link(rel='stylesheet', href='css/theme/default.css', id='theme')
+    link(rel='stylesheet', href='css/zenburn.css')
+    //- If the query includes 'print-pdf', use the PDF print sheet --
+    script.
+      document.write( "<link rel='stylesheet' href='css/" +
+       ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + ".css' type='text/css' media='print'>" );
+
+    //- if lt IE 9
+    //-   script(src='js/html5shiv.js')
+
+    style.
+      .center {
+        display: inline-block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .runner {
+        position: relative;
+      }
+      a.run {
+        position: absolute;
+        bottom: .5em;
+        right: 2em;
+      }
+      .reveal a.run:not(.image) {
+        color: white;
+      }
+      .reveal .spacer {
+        margin-top: 1em;
+      }
+      .reveal th, .reveal td {
+        padding: .3em;
+      }
+      .reveal th {
+        font-weight: bold;
+      }
+      .reveal img.plain {
+        border: 0;
+        box-shadow: none;
+        background: none;
+      }
+      .reveal img.max {
+        width: 95%;
+      }
+      .reveal .small {
+        text-align: center;
+        font-size: 60%;
+      }
+
+
+  body
+    .reveal
+
+      .slides
+        section
+          h1 The Dangerious Cliffs of Node.js
+          h3.spacer Because production-ready is not easy!
+          h3.spacer: a(target='_blank', href='https://scottnonnenberg.com') Scott Nonnenberg
+          h4: a(target='_blank', href='http://scottnonnenberg.github.io/dangerous-cliffs-of-nodejs/dist/slides.html') github.com/scottnonnenberg/dangerous-cliffs-of-nodejs
+          //- .center.small
+          //-   | 'space'/arrow keys/swipe to navigate, 'esc' to zoom out, 's' for speaker notes
+
+        section
+          section
+            h1 Why me?
+            aside.notes
+              ul
+                li History with other platforms like Rails, iOS, .NET, Java
+                li Developing in node.js for over three years now
+                li Own apps, and freelance...
+
+          section
+            h2 Walmart Labs
+            h2 Nordstrom Innovation Lab
+            h2 HaikuDeck
+            h2 MuleSoft
+
+        section
+          section
+            h1 Why am I here?
+          
+          section
+            h1 The gap
+            aside.notes
+              ul
+                li Lots of content tutorials/feature implementation
+                li Much less about getting to production-ready
+
+          section
+            h1 How about a hike?
+            aside.notes
+              ul
+                li Node.js is like...
+                li A friend says to you: Come on this hike with me!
+                li My friends and I do it all the time!
+                li So fun, so real-time, so fast, so productive!
+                li And you say...
+
+          section
+            img(src='img/doge.jpg')
+            aside.notes
+              ul
+                li So fun, such real-time, many fast, wow productive!
+                li Node.js! Doge.js??
+
+          section
+            img.max(src='img/huashin trail.jpg')
+            aside.notes
+              ul
+                li But then the trail is like this!
+                li Your friend says "Oh yeah, we had some trouble the first couple times too..."
+                li Before you hike this trail, it would have been good to know that it isn't like other trails
+                li Node.js has some unique challenges.
+
+        section
+          img.max(src='img/beware dangerous cliff.jpg')
+          aside.notes
+            ul
+              li Let's put some signs up to help our fellow hikers!
+
+        section
+          section
+            h1 Crashes
+            aside.notes 
+              ul
+                li What do we mean by this?
+                li Calling a non-function or null
+                li Dotting into a null/undefined var
+
+          section
+            h2 Crashes
+            div.center
+              table
+                tr
+                  td: span.fragment prevention
+                  th: span.fragment hard
+                tr
+                  td: span.fragment impact
+                  th: span.fragment high
+                tr
+                  td: span.fragment detection
+                  th: span.fragment easy
+                tr
+                  td: span.fragment debuggability
+                  th: span.fragment medium
+            aside.notes 
+              ul
+                li
+                  | prevention: 
+                  strong hard
+                  ul
+                    li 100% code coverage is no guarantee!
+                    li helps to check parameter types, fail fast
+                li
+                  | impact: 
+                  strong high
+                  ul
+                    li so easy to run into this, and the whole server goes down!
+                    li standard answer is just 'restart the server,' 
+                    li but it's more impactful than you think, all other in-progress requests are interrupted!
+                    li (especially if you're coming from Rails, ASP, Java, etc.)
+                li
+                  | detection: 
+                  strong easy
+                  ul
+                    li standard error reporting: process.on('uncaughtException'), express error handler
+                
+                li
+                  | debuggability: 
+                  strong medium
+                  ul
+                    li runtime gives you line/character number, callstack
+                    li but not how the data got that way...
+
+          section
+            h1 Focus: Impact
+            aside.notes
+              | can take it down to low/medium
+
+          section
+            h1 Demo
+
+        section
+          img.max(src='img/cliff edges are dangerous.jpg')
+
+        section
+          section
+            h1 Hangs
+  
+          section
+            h2 Hangs
+            div.center
+              table
+                tr.fragment
+                  td prevention
+                  th medium
+                tr.fragment
+                  td impact
+                  th medium
+                tr.fragment
+                  td detection
+                  th hard
+                tr.fragment
+                  td debuggability
+                  th hard
+            aside.notes 
+              ul
+                li
+                  | prevention: 
+                  strong medium
+                  ul
+                    li 100% code coverage usually means no hangs
+                    li but it can happen in an external module too
+                    li story: redis in bad state, all authenticated user requests hanging
+                li
+                  | impact: 
+                  strong medium
+                  ul
+                    li client request never returns!
+                    li over time, will manifest as a memory leak as well
+                li
+                  | detection: 
+                  strong hard
+                  ul
+                    li hard to setup system to alert you, will be false positives
+                li
+                  | debuggability: 
+                  strong hard
+                  ul
+                    li just know the URL/route!
+
+          section
+            h1 Focus: Detection
+            aside.notes
+              | can take it down to medium/easy
+
+          section
+            h1 Demo
+
+          section
+            h2 hangs: downstream impact
+            ul.spacer
+              li
+                strong Chrome
+                |  - error message after 2 minutes
+              li
+                strong nginx
+                |  - default timeout of 60 seconds
+              li
+                strong Firefox
+                |  - tbd
+              li
+                strong Safari
+                |  - tbd desktop, tbd mobile
+              li
+                strong IE?
+                |  - tbd
+        
+          section
+            h1 non-server apps
+            aside.notes
+              ul
+                li MUST have logging and/or stats collection
+                li BOTH positive and negative metrics
+                li if just errors, the process could be hanging or not running and you'd never know
+
+        section
+          img.max(src='img/dangerous cliffs.jpg')
+
+        section
+          section
+            h1 Blocking event loop
+  
+          section
+            h2 Blocking event loop
+            div.center
+              table
+                tr.fragment
+                  td prevention
+                  th medium
+                tr.fragment
+                  td impact
+                  th high
+                tr.fragment
+                  td detection
+                  th medium
+                tr.fragment
+                  td debuggability
+                  th medium
+            aside.notes 
+              ul
+                li
+                  | prevention: 
+                  strong medium
+                  ul
+                    li can use a number of techniques to keep payloads small
+                    li use streams to split lots of work into small chunks
+                    li need to do a lot of work? take it off the event loop
+                    li but: users are unpredictable!
+                    li story? templates can easily take 100ms to render
+                    li story? Pinsight at LIFFFT, grabbing 10-50k of JSON and transforming it all took long enough to be noticeable
+                li
+                  | impact: 
+                  strong high
+                  ul
+                    li blocks everything else on server - everything!)
+                    li all active requests will take X milliseconds longer, where X milliseconds is how long that synchronous work takes
+                li
+                  | detection: 
+                  strong medium
+                  ul
+                    li we've already got response time tracking in place to check for hangs
+                    li not too hard to capture event loop metrics
+                li
+                  | debuggability: 
+                  strong medium
+                  ul
+                    li look for requests that take more than a couple milliseconds
+                    li look for synchronous calls and loops
+
+          section
+            h1 Focus: Prevention and Detection
+            aside.notes
+              ul
+                li no magic solution for event loop that's slowing down
+                li best we can do is try to plan for it, and monitor closely
+
+          section
+            h1 Demo
+
+        section
+          img.max(src='img/sheer unstable cliffs.jpg')
+
+        section
+          section
+            h1 Too much concurrency
+  
+          section
+            h2 Too much concurrency
+            div.center
+              table
+                tr.fragment
+                  td prevention
+                  th medium
+                tr.fragment
+                  td impact
+                  th high
+                tr.fragment
+                  td detection
+                  th medium
+                tr.fragment
+                  td debuggability
+                  th hard
+            aside.notes 
+              ul
+                li
+                  | prevention: 
+                  strong medium
+                  ul
+                    li specific throttling code
+                    li contracts with remote services
+                li
+                  | impact: 
+                  strong high
+                  ul
+                    li can choke event loop, block everything else on server
+                    li do some simple math - 10ms/task, 100 tasks per second
+                    li can take down remote services - good problem to have, I guess
+                    li story: recent contract moving away from Parse, many requests were taking Parse down. socket hang ups!
+                li
+                  | detection: 
+                  strong medium
+                  ul
+                    li track concurrency
+                    li event loop metrics
+                li
+                  | debuggability: 
+                  strong hard
+                  ul
+                    li may require architecture changes!
+
+          section
+            h1 Focus: Prevention and Detection
+            aside.notes
+              ul
+                li like Blocking the Event Loop, no magic solution
+                li the best we can do plan well and monitor closely
+                li especially when working with remote services
+
+          section
+            h1 Demo
+
+          section
+            h2 Many libaries make this easy
+            ul
+              li 
+                a(href='https://mongodb.github.io/node-mongodb-native/driver-articles/mongoclient.html#connection-pool-configuration') mongodb
+                |  - connection pool, default size of 5
+              li
+                a(href='https://github.com/brianc/node-postgres/wiki/pg#pgdefaultspoolsize') pg
+                |  - connection pool, default size of 10
+              li
+                a(href='https://github.com/felixge/node-mysql/#pool-options') mysql
+                |  - connection pool, default size of 10
+              li
+                a(href='https://github.com/NodeRedis/node_redis/blob/master/examples/backpressure_drain.js') redis
+                |  - queues up extra commands
+
+        section
+          img.max(src='img/steep and crumbling cliffs.jpg')
+
+        section
+          section
+            h1 Error from async call
+  
+          section
+            h2 Error from async call
+            div.center
+              table
+                tr.fragment
+                  td prevention
+                  th hard
+                tr.fragment
+                  td impact
+                  th low
+                tr.fragment
+                  td detection
+                  th easy
+                tr.fragment
+                  td debuggability
+                  th medium
+            aside.notes 
+              ul
+                li
+                  | prevention: 
+                  strong hard
+                  ul
+                    li can't prevent unavailable downstream services!
+                li
+                  | impact: 
+                  strong low
+                  ul
+                    li should be no impact, really!
+                    li interrupts some process, maybe just one request
+                li
+                  | detection: 
+                  strong easy
+                  ul
+                    li standard error reporting
+                    li if (err) cb(err);
+                    li express error handler, Hapi error handler, top-level callback
+                li
+                  | debuggability: 
+                  strong hard
+                  ul
+                    li error message is from low-level library
+                    li what code actually called that async method?
+                    li surprising that this can be hard to debug...
+
+          section
+            h1 Focus: Debuggability
+            aside.notes
+              ul
+                li We can make it easier to see what happened, if we can't prevent it
+
+          section
+            h1 Demo
+
+        section
+          img.max(src='img/rocky trail.jpg')
+
+        section
+          section    
+            h1 prevention
+            h1 impact mitigation
+            h1 detection
+            h1 debuggability
+
+         section
+            h1 Better node.js understanding?
+            aside.notes
+              ul
+                li Edge cases help you understand the system!
+
+          section
+            h1 Go forth and make awesome things!
+
+        section
+          h1 Thanks!
+
+        section
+          h1 Questions?
+
+        section
+          section
+            h1 Resources
+          
+          section
+            h2 prevention
+            ul
+              li testing: mocha, sinon, chai, supertest, vows, intern, assert, etc.
+              li code coverage: istanbul, blanket
+              li static analysis: jshint, eslint, js-complexity, jscs
+              li thehelp-project gets things in place quick
+          
+          section
+            h2 impact mitigation
+            ul
+              li graceful shutdown: thehelp-cluster
+              li throttling when busy: toobusy
+              li TODO: module? concurrency limits
+              li TODO: module? payload size limits
+
+          section
+            h2 deployment
+            ul
+              li git push (heroku-style), docker, ansible, capistrano
+              li graceful shutdown: thehelp-cluster
+
+          section
+            h2 detection
+            ul
+              li slow event loop: toobusy
+              li multi-format error capture: thehelp-last-ditch
+              li stats: graphite
+              li logging: winston, bunyan, thehelp-log-shim, ELK stack
+            
+          section
+            h2 debuggability
+            ul
+              li promises (like when), thehelp-core/breadcrumbs
+              li logging: winston, bunyan, thehelp-log-shim, ELK stack
+
+    script(src='js/head.min.js')
+    script(src='js/reveal.min.js')
+
+    script.
+      Reveal.initialize({
+        controls: false,
+        progress: true,
+        history: true,
+        center: true,
+        overview: true,
+
+        theme: 'default',
+        transition: 'linear',
+
+        dependencies: [
+          { src: 'js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'lib/notes/notes.js', async: true },
+        ],
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 800,
+        height: 600,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        // Bounds for smallest/largest possible scale to apply to content
+        minScale: 0.2,
+        maxScale: 3.0
+      });
