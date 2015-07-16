@@ -9,16 +9,13 @@ var supertest = require('supertest');
 
 var startProcess = require('../start_process');
 
-
-describe('1. Crashes, b. express with thehelp-cluster', function() {
+describe('1. Crashes, c. hapi', function() {
   var child, agent;
 
   before(function(done) {
     agent = supertest.agent('http://localhost:3000');
 
-    var entrypoint = path.join(__dirname,
-      '../../../demos/1. Crashes/b. express with thehelp-cluster.js');
-
+    var entrypoint = path.join(__dirname, '../../../demos/1. Crashes/c. hapi.js');
     child = startProcess(entrypoint);
 
     setTimeout(done, 1000);
@@ -27,8 +24,7 @@ describe('1. Crashes, b. express with thehelp-cluster', function() {
   it('returns error for crash in route handler', function(done) {
     agent
       .get('/handlerCrash')
-      .expect(/express error handler/)
-      .expect(/x.split() is not a function/)
+      .expect(/Internal Server Error/)
       .expect(500, done);
   });
 
@@ -42,8 +38,7 @@ describe('1. Crashes, b. express with thehelp-cluster', function() {
 
     agent
       .get('/asyncCrash')
-      .expect(/express error handler/)
-      .expect(/Cannot read property/)
+      .expect(/Internal Server Error/)
       .expect(500, function(err, result) {
         if (err) {
           done(err);
@@ -52,10 +47,12 @@ describe('1. Crashes, b. express with thehelp-cluster', function() {
   });
 
   it('process shuts down afterwards', function(done) {
+    child.kill();
+
     child.on('close', function() {
       expect(child).to.have.property('result');
 
-      expect(child.result).to.match(/Master about to exit/);
+      // expect(child.result).to.match(/Top-level exception/);
 
       done();
     });

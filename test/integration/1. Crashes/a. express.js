@@ -25,11 +25,18 @@ describe('1. Crashes, a. express', function() {
     agent
       .get('/handlerCrash')
       .expect(/express error handler/)
-      .expect(/undefined is not a function/)
+      .expect(/x.split() is not a function/)
       .expect(500, done);
   });
 
   it('process crashes for async crash, socket disconnect', function(done) {
+    agent
+      .get('/longAsyncTask')
+      .end(function(err) {
+        expect(err).to.exist;
+        expect(err).to.have.property('message').that.match(/socket hang up/);
+      });
+
     agent
       .get('/asyncCrash')
       .end(function(err) {

@@ -8,6 +8,7 @@ module.exports = function(grunt) {
   config.standardSetup();
   config.standardDefault();
 
+  grunt.loadNpmTasks('grunt-contrib-jade');
   grunt.config('jade', {
     compile: {
       files: [{
@@ -20,11 +21,9 @@ module.exports = function(grunt) {
     }
   });
 
+  // thehelp-project installs grunt-contrib-watch
   grunt.config('watch.jade', {
     files: ['src/**/*.jade'],
     tasks: ['jade']
   });
-
-  grunt.loadNpmTasks('grunt-contrib-jade');
-  grunt.loadNpmTasks('grunt-contrib-watch');
 };
