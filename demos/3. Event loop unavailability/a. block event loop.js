@@ -22,7 +22,7 @@ var getFile = function() {
   fs.readFile('nonexistent', function() {
     var now = new Date();
     var delta = now.getTime() - start.getTime()
-    console.log('getFile: done', delta + 'ms');
+    console.log('getFile: done,', delta + 'ms');
   });
 };
 

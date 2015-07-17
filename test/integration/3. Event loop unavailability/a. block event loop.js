@@ -9,14 +9,14 @@ var supertest = require('supertest');
 
 var startProcess = require('../start_process');
 
-describe('3. Blocking event loop, a. setInterval and setTimeout', function() {
+describe('3. Event loop unavailability, a. block event loop', function() {
   var child, agent;
 
   before(function(done) {
     agent = supertest.agent('http://localhost:3000');
 
     var entrypoint = path.join(__dirname,
-      '../../../demos/3. Blocking event loop/a. setInterval and setTimeout.js');
+      '../../../demos/3. Event loop unavailability/a. block event loop.js');
 
     child = startProcess(entrypoint);
 
@@ -31,10 +31,14 @@ describe('3. Blocking event loop, a. setInterval and setTimeout', function() {
 
       var result = child.result;
 
-      expect(result).to.match(/sync task start\nsync task done/);
+      expect(result).to.match(/getFile\: start\ngetFile\: done/);
 
-      var match = result.match(/interval/g);
+      var match = result.match(/writeInterval/g);
       expect(match).to.have.length(9);
+
+      match = result.match(/getFile/g);
+      expect(match).to.have.length(4);
+
 
       done();
     });
