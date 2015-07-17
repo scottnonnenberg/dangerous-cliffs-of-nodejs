@@ -79,7 +79,7 @@ module.exports = function(cb) {
     step4,
     step5
   ], function(err, result) {
-    if (breadcrumbs.add(err, cb)) {
+    if (breadcrumbs.add(err, cb, {userId: 5, command: 'save'})) {
       return;
     }
 
