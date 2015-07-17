@@ -28,6 +28,7 @@ app.get('/longAsyncTask', function(req, res) {
 
   setTimeout(function() {
     console.log('long task: done!');
+    res.type('text');
     res.send('success!')
   }, 2000);
 });
@@ -42,6 +43,7 @@ app.get('/asyncCrash', function(req, res) {
 app.use(function(err, req, res, next) {
   console.log('express error handler run!', err.stack);
   res.status(500);
+  res.type('text');
   res.send('express error handler ' + err.stack);
 });
 
