@@ -14,11 +14,11 @@ var gracefulExpress = new cluster.GracefulExpress();
 app.use(gracefulExpress.middleware);
 
 app.get('/', function(req, res) {
-  res.send('<html><body>'
-    + '<div><a href="/handlerCrash">Top-level crash in route handler</a></div>'
-    + '<div><a href="/longAsyncTask">First, start long task in new tab</a></div>'
-    + '<div><a href="/asyncCrash">Then crash the server in new tab</a></div>'
-    + '</body></html>');
+  res.send('<html><body>' +
+    '<div><a href="/handlerCrash">/handlerCrash - Crash in route handler</a></div>' +
+    '<div><a href="/longAsyncTask">/longAsyncTask - First, start in new tab</a></div>' +
+    '<div><a href="/asyncCrash">/asyncCrash - Then crash server in new tab</a></div>' +
+    '</body></html>');
 });
 
 app.get('/handlerCrash', function(req, res) {
