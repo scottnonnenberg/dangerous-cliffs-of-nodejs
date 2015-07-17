@@ -11,21 +11,38 @@ var startProcess = require('../start_process');
 
 describe('1. Crashes, c. hapi', function() {
   var child, agent;
+  var entrypoint = path.join(__dirname, '../../../demos/1. Crashes/c. hapi.js');
 
   before(function(done) {
     agent = supertest.agent('http://localhost:3000');
 
-    var entrypoint = path.join(__dirname, '../../../demos/1. Crashes/c. hapi.js');
     child = startProcess(entrypoint);
 
     setTimeout(done, 1000);
   });
 
-  it('returns error for crash in route handler', function(done) {
+  it('returns error for crash in route handler, shuts down', function(done) {
     agent
       .get('/handlerCrash')
       .expect(/Internal Server Error/)
-      .expect(500, done);
+      .expect(500, function(err) {
+        if (err) {
+          done(err);
+        }
+      });
+
+    child.on('close', function() {
+      expect(child).to.have.property('result');
+
+      expect(child.result).to.match(/crash! shutting down!/);
+
+      done();
+    });
+  });
+
+  it('start up process again', function(done) {
+    child = startProcess(entrypoint);
+    setTimeout(done, 1000);
   });
 
   it('returns error for async crash', function(done) {
@@ -47,12 +64,10 @@ describe('1. Crashes, c. hapi', function() {
   });
 
   it('process shuts down afterwards', function(done) {
-    child.kill();
-
     child.on('close', function() {
       expect(child).to.have.property('result');
 
-      // expect(child.result).to.match(/Top-level exception/);
+      expect(child.result).to.match(/crash! shutting down!/);
 
       done();
     });

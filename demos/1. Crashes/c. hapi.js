@@ -8,12 +8,9 @@ var Hapi = require('hapi');
 
 var server = new Hapi.Server();
 
-server.on('log', function(event, tags) {
-  // TODO: this is not working for some reason
-  console.log('got log event!');
-
-  if (tags.error && tags.implementation && tags.internal) {
-    console.log('error!', event.tags);
+server.on('request-error', function(event, err) {
+  if (err.isDeveloperError) {
+    console.log('crash! shutting down!');
     server.stop();
   }
 });
