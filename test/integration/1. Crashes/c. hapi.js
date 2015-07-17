@@ -56,7 +56,7 @@ describe('1. Crashes, c. hapi', function() {
     agent
       .get('/asyncCrash')
       .expect(/Internal Server Error/)
-      .expect(500, function(err, result) {
+      .expect(500, function(err) {
         if (err) {
           done(err);
         }

@@ -38,6 +38,7 @@ describe('2. Hangs, a. express and morgan, no callback', function() {
       .get('/hang')
       .timeout(timeout)
       .end(function(err, res) {
+        /* jshint unused: false */
         expect(err).to.have.property('timeout', timeout);
         setTimeout(done, 100);
       });

@@ -9,6 +9,6 @@ var supertest = require('supertest');
 
 var startProcess = require('../start_process');
 
-describe('4. Too much concurrency, b. choke remote service', function() {
+describe('5. Hammering other services, a. choke remote service', function() {
 
 });

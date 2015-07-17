@@ -44,7 +44,7 @@ describe('1. Crashes, b. express with thehelp-cluster', function() {
       .get('/asyncCrash')
       .expect(/express error handler/)
       .expect(/Cannot read property/)
-      .expect(500, function(err, result) {
+      .expect(500, function(err) {
         if (err) {
           done(err);
         }
