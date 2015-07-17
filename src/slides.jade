@@ -69,7 +69,7 @@ html(lang='en')
 
       .slides
         section
-          h1 The Dangerious Cliffs of Node.js
+          h1 The Dangerous Cliffs of Node.js
           h3.spacer Because production-ready is not easy!
           h3.spacer: a(target='_blank', href='https://scottnonnenberg.com') Scott Nonnenberg
           h4: a(target='_blank', href='http://scottnonnenberg.github.io/dangerous-cliffs-of-nodejs/dist/slides.html') github.com/scottnonnenberg/dangerous-cliffs-of-nodejs
@@ -107,17 +107,8 @@ html(lang='en')
             aside.notes
               ul
                 li Node.js is like...
-                li A friend says to you: Come on this hike with me!
-                li My friends and I do it all the time!
-                li So fun, so real-time, so fast, so productive!
-                li And you say...
-
-          section
-            img(src='img/doge.jpg')
-            aside.notes
-              ul
-                li So fun, such real-time, many fast, wow productive!
-                li Node.js! Doge.js??
+                li A friend says to you... 
+                li Come on this hike with me! So great!
 
           section
             img.max(src='img/huashin trail.jpg')
@@ -125,7 +116,6 @@ html(lang='en')
               ul
                 li But then the trail is like this!
                 li Your friend says "Oh yeah, we had some trouble the first couple times too..."
-                li Before you hike this trail, it would have been good to know that it isn't like other trails
                 li Node.js has some unique challenges.
 
         section
@@ -140,61 +130,21 @@ html(lang='en')
             aside.notes 
               ul
                 li What do we mean by this?
-                li Calling a non-function or null
+                li Calling a non-function
                 li Dotting into a null/undefined var
 
           section
-            h2 Crashes
-            div.center
-              table
-                tr
-                  td: span.fragment prevention
-                  th: span.fragment hard
-                tr
-                  td: span.fragment impact
-                  th: span.fragment high
-                tr
-                  td: span.fragment detection
-                  th: span.fragment easy
-                tr
-                  td: span.fragment debuggability
-                  th: span.fragment medium
-            aside.notes 
-              ul
-                li
-                  | prevention: 
-                  strong hard
-                  ul
-                    li 100% code coverage is no guarantee!
-                    li helps to check parameter types, fail fast
-                li
-                  | impact: 
-                  strong high
-                  ul
-                    li so easy to run into this, and the whole server goes down!
-                    li standard answer is just 'restart the server,' 
-                    li but it's more impactful than you think, all other in-progress requests are interrupted!
-                    li (especially if you're coming from Rails, ASP, Java, etc.)
-                li
-                  | detection: 
-                  strong easy
-                  ul
-                    li standard error reporting: process.on('uncaughtException'), express error handler
-                
-                li
-                  | debuggability: 
-                  strong medium
-                  ul
-                    li runtime gives you line/character number, callstack
-                    li but not how the data got that way...
-
-          section
-            h1 Focus: Impact
-            aside.notes
-              | can take it down to low/medium
-
-          section
             h1 Demo
+
+          section
+            h1 Benefit?
+            h1 Impact
+            aside.notes
+              ul
+                li Took it down to low/medium
+
+          section
+            h1 Deployment`
 
         section
           img.max(src='img/cliff edges are dangerous.jpg')
@@ -202,75 +152,16 @@ html(lang='en')
         section
           section
             h1 Hangs
-  
-          section
-            h2 Hangs
-            div.center
-              table
-                tr.fragment
-                  td prevention
-                  th medium
-                tr.fragment
-                  td impact
-                  th medium
-                tr.fragment
-                  td detection
-                  th hard
-                tr.fragment
-                  td debuggability
-                  th hard
-            aside.notes 
-              ul
-                li
-                  | prevention: 
-                  strong medium
-                  ul
-                    li 100% code coverage usually means no hangs
-                    li but it can happen in an external module too
-                    li story: redis in bad state, all authenticated user requests hanging
-                li
-                  | impact: 
-                  strong medium
-                  ul
-                    li client request never returns!
-                    li over time, will manifest as a memory leak as well
-                li
-                  | detection: 
-                  strong hard
-                  ul
-                    li hard to setup system to alert you, will be false positives
-                li
-                  | debuggability: 
-                  strong hard
-                  ul
-                    li just know the URL/route!
-
-          section
-            h1 Focus: Detection
-            aside.notes
-              | can take it down to medium/easy
 
           section
             h1 Demo
 
           section
-            h2 hangs: downstream impact
-            ul.spacer
-              li
-                strong Chrome
-                |  - error message after 2 minutes
-              li
-                strong nginx
-                |  - default timeout of 60 seconds
-              li
-                strong Firefox
-                |  - tbd
-              li
-                strong Safari
-                |  - tbd desktop, tbd mobile
-              li
-                strong IE?
-                |  - tbd
+            h1 Benefit?
+            h1 Detection
+            aside.notes
+              ul
+                li Now we know when it's happening...
         
           section
             h1 non-server apps
@@ -285,129 +176,22 @@ html(lang='en')
 
         section
           section
-            h1 Blocking event loop
+            h1 Event loop unavailability
   
           section
-            h2 Blocking event loop
-            div.center
-              table
-                tr.fragment
-                  td prevention
-                  th medium
-                tr.fragment
-                  td impact
-                  th high
-                tr.fragment
-                  td detection
-                  th medium
-                tr.fragment
-                  td debuggability
-                  th medium
-            aside.notes 
-              ul
-                li
-                  | prevention: 
-                  strong medium
-                  ul
-                    li can use a number of techniques to keep payloads small
-                    li use streams to split lots of work into small chunks
-                    li need to do a lot of work? take it off the event loop
-                    li but: users are unpredictable!
-                    li story? templates can easily take 100ms to render
-                    li story? Pinsight at LIFFFT, grabbing 10-50k of JSON and transforming it all took long enough to be noticeable
-                li
-                  | impact: 
-                  strong high
-                  ul
-                    li blocks everything else on server - everything!)
-                    li all active requests will take X milliseconds longer, where X milliseconds is how long that synchronous work takes
-                li
-                  | detection: 
-                  strong medium
-                  ul
-                    li we've already got response time tracking in place to check for hangs
-                    li not too hard to capture event loop metrics
-                li
-                  | debuggability: 
-                  strong medium
-                  ul
-                    li look for requests that take more than a couple milliseconds
-                    li look for synchronous calls and loops
+            h1 Demo
 
           section
-            h1 Focus: Prevention and Detection
+            h1 Benefit?
+            h1 Prevention
+            h1 Detection
             aside.notes
               ul
                 li no magic solution for event loop that's slowing down
                 li best we can do is try to plan for it, and monitor closely
 
           section
-            h1 Demo
-
-        section
-          img.max(src='img/sheer unstable cliffs.jpg')
-
-        section
-          section
-            h1 Too much concurrency
-  
-          section
-            h2 Too much concurrency
-            div.center
-              table
-                tr.fragment
-                  td prevention
-                  th medium
-                tr.fragment
-                  td impact
-                  th high
-                tr.fragment
-                  td detection
-                  th medium
-                tr.fragment
-                  td debuggability
-                  th hard
-            aside.notes 
-              ul
-                li
-                  | prevention: 
-                  strong medium
-                  ul
-                    li specific throttling code
-                    li contracts with remote services
-                li
-                  | impact: 
-                  strong high
-                  ul
-                    li can choke event loop, block everything else on server
-                    li do some simple math - 10ms/task, 100 tasks per second
-                    li can take down remote services - good problem to have, I guess
-                    li story: recent contract moving away from Parse, many requests were taking Parse down. socket hang ups!
-                li
-                  | detection: 
-                  strong medium
-                  ul
-                    li track concurrency
-                    li event loop metrics
-                li
-                  | debuggability: 
-                  strong hard
-                  ul
-                    li may require architecture changes!
-
-          section
-            h1 Focus: Prevention and Detection
-            aside.notes
-              ul
-                li like Blocking the Event Loop, no magic solution
-                li the best we can do plan well and monitor closely
-                li especially when working with remote services
-
-          section
-            h1 Demo
-
-          section
-            h2 Many libaries make this easy
+            h2 Know your libraries!
             ul
               li 
                 a(href='https://mongodb.github.io/node-mongodb-native/driver-articles/mongoclient.html#connection-pool-configuration') mongodb
@@ -422,65 +206,41 @@ html(lang='en')
                 a(href='https://github.com/NodeRedis/node_redis/blob/master/examples/backpressure_drain.js') redis
                 |  - queues up extra commands
 
+        //- section
+        //-   img.max(src='img/sheer unstable cliffs.jpg')
+
+        //- section
+        //-   section
+        //-     h1 Hammering other services
+  
+        //-   section
+        //-     h1 Demo
+
+        //-   section
+        //-     h1 Benefit?
+        //-     h1 Prevention
+        //-     aside.notes
+        //-       ul
+        //-         li let's be nice, everyone.
+        //-         li node.js is really good at parallelizing, some aren't
+
         section
           img.max(src='img/steep and crumbling cliffs.jpg')
 
         section
           section
-            h1 Error from async call
-  
-          section
-            h2 Error from async call
-            div.center
-              table
-                tr.fragment
-                  td prevention
-                  th hard
-                tr.fragment
-                  td impact
-                  th low
-                tr.fragment
-                  td detection
-                  th easy
-                tr.fragment
-                  td debuggability
-                  th medium
-            aside.notes 
-              ul
-                li
-                  | prevention: 
-                  strong hard
-                  ul
-                    li can't prevent unavailable downstream services!
-                li
-                  | impact: 
-                  strong low
-                  ul
-                    li should be no impact, really!
-                    li interrupts some process, maybe just one request
-                li
-                  | detection: 
-                  strong easy
-                  ul
-                    li standard error reporting
-                    li if (err) cb(err);
-                    li express error handler, Hapi error handler, top-level callback
-                li
-                  | debuggability: 
-                  strong hard
-                  ul
-                    li error message is from low-level library
-                    li what code actually called that async method?
-                    li surprising that this can be hard to debug...
-
-          section
-            h1 Focus: Debuggability
-            aside.notes
-              ul
-                li We can make it easier to see what happened, if we can't prevent it
+            h1 Error from
+            h1 async call
 
           section
             h1 Demo
+
+          section
+            h1 Benefit?
+            h1 Debuggability
+            aside.notes
+              ul
+                li We can make it easier to see what happened, if we can't prevent it
 
         section
           img.max(src='img/rocky trail.jpg')
@@ -498,11 +258,11 @@ html(lang='en')
               ul
                 li Edge cases help you understand the system!
 
-          section
-            h1 Go forth and make awesome things!
-
         section
           h1 Thanks!
+          aside.notes
+            ul
+              li Go forth and make awesome things!
 
         section
           h1 Questions?
@@ -557,6 +317,25 @@ html(lang='en')
             ul
               li promises (like when), thehelp-core/breadcrumbs
               li logging: winston, bunyan, thehelp-log-shim, ELK stack
+
+          section
+            h2 hangs: downstream impact
+            ul.spacer
+              li
+                strong Chrome
+                |  - error message after 2 minutes
+              li
+                strong nginx
+                |  - default timeout of 60 seconds
+              li
+                strong Firefox
+                |  - tbd
+              li
+                strong Safari
+                |  - tbd desktop, tbd mobile
+              li
+                strong IE?
+                |  - tbd
 
     script(src='js/head.min.js')
     script(src='js/reveal.min.js')
