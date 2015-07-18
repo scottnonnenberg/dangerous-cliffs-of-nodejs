@@ -1,7 +1,7 @@
 
 'use strict';
 
-var when = require('when');
+var when = require('when'); // can drop q in here; same API and behavior
 var _ = require('lodash');
 
 
