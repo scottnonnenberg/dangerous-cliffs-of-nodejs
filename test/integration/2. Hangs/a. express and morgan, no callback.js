@@ -2,6 +2,7 @@
 'use strict';
 
 var path = require('path');
+var stripAnsi = require('strip-ansi');
 
 var test = require('thehelp-test');
 var expect = test.expect;
@@ -44,13 +45,41 @@ describe('2. Hangs, a. express and morgan, no callback', function() {
       });
   });
 
+  it('request to /longAsyncTask returns', function(done) {
+    this.timeout(4000);
+
+    agent
+      .get('/longAsyncTask')
+      .expect(200, done);
+  });
+
+  it('cancel request to /longAsyncTask', function(done) {
+    this.timeout(4000);
+
+    agent
+      .get('/longAsyncTask')
+      .timeout(1000)
+      .end(function(err, res) {
+        /* jshint unused: false */
+        expect(err).to.have.property('timeout', 1000);
+        setTimeout(done, 2000);
+      });
+  });
+
   it('shuts down', function(done) {
     child.kill();
 
     child.on('close', function() {
       expect(child).to.have.property('result');
 
-      expect(child.result).to.match(/- ms/);
+      var result = stripAnsi(child.result);
+
+      var match = result.match(/long task/g);
+      expect(match).to.have.length(6);
+
+      expect(result).to.match(/GET \/hang - - ms/);
+
+      expect(result).to.match(/GET \/longAsyncTask - - ms/);
 
       done();
     });

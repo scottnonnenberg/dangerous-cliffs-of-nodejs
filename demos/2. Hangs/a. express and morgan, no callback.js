@@ -10,27 +10,44 @@ var app = express();
 
 app.use(morgan('dev'));
 
+// log entry looks like this:
+// GET / 200 3.668 ms - 72
+
 app.get('/', function(req, res) {
-  res.send('<html><body>'
-    + '<div><a href="/hang">Will not return</a></div>'
-    + '</body></html>');
+  res.send('<html><body>' +
+    '<div><a href="/hang">/hang - Will not return</a></div>' +
+    '<div><a href="/hang">/longAsyncTask - Takes 2s. Cancel request</a></div>' +
+    '</body></html>');
 });
+
+// log entries for hangs have no timing:
+// GET /hang - - ms - -
+// GET /hang - - ms - -
+// GET /hang - - ms - -
+// GET /hang - - ms - -
+// Note: chrome attempted to load the page multiple times!
 
 app.get('/hang', function(req, res) {
   // no callback!
 });
 
-// normal request
-// GET / 200 3.668 ms - 72
+// when user cancels request, looks same as hang:
+// GET /longAsyncTask - - ms - -
 
-// chrome attempted to load the page multiple times!
-// GET /hang - - ms - -
-// GET /hang - - ms - -
-// GET /hang - - ms - -
-// GET /hang - - ms - -
+app.get('/longAsyncTask', function(req, res) {
+  console.log('long task: start');
 
-// this is what it looks like if user cancels navigation
-// GET /hang - - ms - -
+  setTimeout(function() {
+    console.log('long task: still working!');
+  }, 1000);
+
+  setTimeout(function() {
+    console.log('long task: done!');
+    res.type('text');
+    res.send('success!')
+  }, 2000);
+});
+
 
 var port = 3000;
 app.listen(port, function() {
