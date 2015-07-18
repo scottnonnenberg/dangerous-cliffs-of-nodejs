@@ -1,7 +1,7 @@
 
 'use strict';
 
-var multistep = require('./d. promises and breadcrumbs.js');
+var multistep = require('./d. when and breadcrumbs.js');
 
 multistep()
   .then(function() {
