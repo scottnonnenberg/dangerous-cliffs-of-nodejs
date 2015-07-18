@@ -18,7 +18,7 @@ server.route({
   handler: function(request, reply) {
     reply('<html><body>' +
       '<div><a href="/hang">/hang - Will not return</a></div>' +
-      '<div><a href="/hang">/longAsyncTask - Takes 2s. Cancel request</a></div>' +
+      '<div><a href="/longAsyncTask">/longAsyncTask - Takes 2s; stop request</a></div>' +
       '</body></html>');
   }
 });
