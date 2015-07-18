@@ -22,10 +22,6 @@ app.get('/', function(req, res) {
 
 // log entries for hangs have no timing:
 // GET /hang - - ms - -
-// GET /hang - - ms - -
-// GET /hang - - ms - -
-// GET /hang - - ms - -
-// Note: chrome attempted to load the page multiple times!
 
 app.get('/hang', function(req, res) {
   // no callback!
