@@ -5,6 +5,7 @@ var fs = require('fs');
 var _ = require('lodash');
 
 var Hapi = require('hapi');
+var Boom = require('boom');
 
 var server = new Hapi.Server();
 
@@ -24,10 +25,19 @@ server.route({
   path: '/',
   handler: function(request, reply) {
     reply('<html><body>' +
+      '<div><a href="/normalError">/normalError - Error returned, not crash</a></div>' +
       '<div><a href="/handlerCrash">/handlerCrash - Crash in route handler</a></div>' +
       '<div><a href="/longAsyncTask">/longAsyncTask - First, start in new tab</a></div>' +
       '<div><a href="/asyncCrash">/asyncCrash - Then crash server in new tab</a></div>' +
       '</body></html>');
+  }
+});
+
+server.route({
+  method: 'GET',
+  path: '/normalError',
+  handler: function(request, reply) {
+    reply(Boom.badData(new Error('Something went wrong!')));
   }
 });
 
@@ -39,6 +49,8 @@ server.route({
     x.split();
   }
 });
+
+// try `sudo kill <pid>` while this process is running!
 
 server.route({
   method: 'GET',

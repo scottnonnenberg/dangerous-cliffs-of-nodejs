@@ -15,16 +15,23 @@ app.use(gracefulExpress.middleware);
 
 app.get('/', function(req, res) {
   res.send('<html><body>' +
+    '<div><a href="/normalError">/normalError - Error returned, not crash</a></div>' +
     '<div><a href="/handlerCrash">/handlerCrash - Crash in route handler</a></div>' +
     '<div><a href="/longAsyncTask">/longAsyncTask - First, start in new tab</a></div>' +
     '<div><a href="/asyncCrash">/asyncCrash - Then crash server in new tab</a></div>' +
     '</body></html>');
 });
 
+app.get('/normalError', function(req, res, next) {
+  next(new Error('Something went wrong!'));
+});
+
 app.get('/handlerCrash', function(req, res) {
   var x = 4;
   x.split();
 });
+
+// try `sudo kill <pid>` while this process is running!
 
 app.get('/longAsyncTask', function(req, res) {
   console.log('long task: start');
