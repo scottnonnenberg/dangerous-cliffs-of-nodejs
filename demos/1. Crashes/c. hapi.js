@@ -11,9 +11,14 @@ var server = new Hapi.Server();
 
 server.on('request-error', function(event, err) {
   if (err.isDeveloperError) {
-    console.log('crash! shutting down!');
+    console.log('Crash! Shutting down gracefully!');
     server.stop();
   }
+});
+
+process.on('SIGTERM', function() {
+  console.log('SIGTERM! Shutting down gracefully!')
+  server.stop();
 });
 
 server.connection({
