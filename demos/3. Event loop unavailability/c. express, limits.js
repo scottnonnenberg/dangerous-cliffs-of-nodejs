@@ -3,6 +3,7 @@
 
 var fs = require('fs');
 
+var _ = require('lodash');
 var express = require('express');
 var morgan = require('morgan');
 var toobusy = require('toobusy-js');
@@ -39,7 +40,8 @@ app.get('/', function(req, res) {
 });
 
 app.post('/uploadData', function(req, res) {
-  res.send(req.body);
+  console.log(_.keys(req.body).length);
+  res.send({keys: _.keys(req.body).length});
 });
 
 var doSyncWork = function(mil) {
@@ -62,7 +64,7 @@ app.get('/longSyncTask', function(req, res) {
 // register error handler
 app.use(function(err, req, res, next) {
   console.log('express error handler run!', err.stack);
-  res.status(500);
+  res.status(err.statusCode || 500);
   res.type('text');
   res.send('express error handler ' + err.stack);
 });
