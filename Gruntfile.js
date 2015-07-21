@@ -13,7 +13,7 @@ module.exports = function(grunt) {
     compile: {
       files: [{
         expand: true,
-        cwd: 'src',
+        cwd: 'src/slides',
         src: '**/*.jade',
         dest: 'dist/',
         ext: '.html'
@@ -23,7 +23,7 @@ module.exports = function(grunt) {
 
   // thehelp-project installs grunt-contrib-watch
   grunt.config('watch.jade', {
-    files: ['src/**/*.jade'],
+    files: ['src/slides/**/*.jade'],
     tasks: ['jade']
   });
 };

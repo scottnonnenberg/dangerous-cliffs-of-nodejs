@@ -1,3 +1,0 @@
-timeout entry from nginx error log:
-
-2015/04/01 19:50:28 [error] 24496#0: *2902 upstream timed out (110: Connection timed out) while reading response header from upstream, client: 10.1.1.10, server: , request: "GET / HTTP/1.1", upstream: "http://127.0.0.1:3003/", host: "scottnonnenberg.com"s
