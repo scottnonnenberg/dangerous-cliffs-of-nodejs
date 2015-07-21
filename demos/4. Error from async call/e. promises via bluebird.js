@@ -4,6 +4,9 @@
 var bluebird = require('bluebird');
 var _ = require('lodash');
 
+
+bluebird.longStackTraces();
+
 var callRemoteService = function callRemoteService() {
   return new bluebird(function(resolve, reject) {
     setTimeout(function() {
@@ -50,7 +53,7 @@ var step5 = function step3() {
     });
 };
 
-module.exports = function() {
+var multistep = module.exports = function() {
   var steps = [
     step1(),
     step2(),
@@ -64,3 +67,13 @@ module.exports = function() {
       // do domain-specific stuff
     });
 };
+
+if (require.main === module) {
+  multistep()
+    .then(function() {
+      console.log('success!');
+    })
+    .catch(function(err) {
+      console.log(err.stack);
+    });
+}

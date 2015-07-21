@@ -69,7 +69,7 @@ var step5 = function step3(cb) {
   });
 };
 
-module.exports = function(cb) {
+var multistep = module.exports = function(cb) {
   async.series([
     step1,
     step2,
@@ -86,3 +86,9 @@ module.exports = function(cb) {
     return cb();
   });
 };
+
+if (require.main === module) {
+  multstep(function(err) {
+    console.log(err.stack);
+  });
+}
