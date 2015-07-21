@@ -86,6 +86,12 @@ server.route({
 });
 
 
+// Exercise for the reader: Implement a /proxy endpoint
+//   url querystring parameter
+//   pipe response from `request` or `superagent` through to original client
+//   which headers should be piped through from target, which should remain from proxy?
+
+
 var options = {
   opsInterval: 1000,
   reporters: [{

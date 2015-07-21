@@ -60,6 +60,13 @@ app.get('/downloadData', function(req, res) {
   readStream.pipe(res);
 });
 
+
+// Exercise for the reader: Implement a /proxy endpoint
+//   url querystring parameter
+//   pipe response from `request` or `superagent` through to original client
+//   which headers should be piped through from target, which should remain from proxy?
+
+
 // register error handler
 app.use(function(err, req, res, next) {
   /* jshint unused: false */
