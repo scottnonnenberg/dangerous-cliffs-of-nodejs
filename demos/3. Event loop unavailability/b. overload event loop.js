@@ -8,7 +8,7 @@ var toobusy = require('toobusy-js');
 
 var LAUNCH_DELAY = 10;
   // start: 10 = 100 requests/second
-  // try: 5 = 200 requests/second
+  // try this: 5 = 200 requests/second
 var EXPANSION = 1;
 var TASK_DELAY = 20;
 var SYNC_WORK = 10;
@@ -18,6 +18,7 @@ var REJECT_IF_TOOBUSY = false;
 
 var concurrent = 0;
 var completed = 0;
+var rejected = 0;
 
 
 var doSyncWork = function() {
@@ -42,6 +43,7 @@ var launchTasks = function() {
   var tasks = [];
 
   if (REJECT_IF_TOOBUSY && toobusy()) {
+    rejected += EXPANSION;
     return;
   }
 
@@ -56,9 +58,11 @@ var launchTasks = function() {
 
 var writeStatus = function() {
   console.log('lag:', toobusy.lag());
-  console.log('concurrent:', concurrent);
-  console.log('completed:', completed);
+  console.log(' concurrent:', concurrent);
+  console.log('  completed:', completed);
+  console.log('   rejected:', rejected);
   completed = 0;
+  rejected = 0;
 };
 
 
