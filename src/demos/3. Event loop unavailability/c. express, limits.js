@@ -32,7 +32,7 @@ app.get('/', function(req, res) {
   res.send('<html><body>' +
     '<div><a href="/longSyncTask">/longSyncTask - open a few tabs; 503!</a></div>' +
     '<pre>curl -XPOST --header \'Content-Type: application/json\'' +
-      ' -T \'demos/3. Event loop unavailability/data/(big|small).json\'' +
+      ' -T \'demos/3. Event loop unavailability/data/(huge|large|small).json\'' +
       ' localhost:' + port + '/uploadData</pre>' +
     '</body></html>');
 });

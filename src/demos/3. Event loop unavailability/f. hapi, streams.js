@@ -28,7 +28,7 @@ server.route({
   handler: function(request, reply) {
     reply('<html><body>' +
       '<pre>curl -XPOST --header \'Content-Type: application/json\'' +
-        ' -T \'demos/3. Event loop unavailability/data/(big|small).json\'' +
+        ' -T \'demos/3. Event loop unavailability/data/(huge|large|small).json\'' +
         ' ' + server.info.uri + '/uploadData</pre>' +
       '<pre>curl ' + server.info.uri + '/downloadData</pre>' +
       '</body></html>');

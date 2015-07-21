@@ -43,8 +43,8 @@ describe('3. Event loop unavailability, c. express, limits', function() {
       .expect(200, done);
   });
 
-  it('returns 413 on upload of big file', function(done) {
-    var data = loadData(path.join(baseDir, 'data/big.json'));
+  it('returns 413 on upload of large file', function(done) {
+    var data = loadData(path.join(baseDir, 'data/large.json'));
 
     agent
       .post('/uploadData')

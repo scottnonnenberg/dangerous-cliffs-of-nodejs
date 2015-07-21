@@ -43,8 +43,8 @@ describe('3. Event loop unavailability, f. hapi, streams', function() {
       .expect(200, done);
   });
 
-  it('returns 200 on upload of big file', function(done) {
-    var data = loadData(path.join(baseDir, 'data/big.json'));
+  it('returns 200 on upload of large file', function(done) {
+    var data = loadData(path.join(baseDir, 'data/large.json'));
 
     agent
       .post('/uploadData')

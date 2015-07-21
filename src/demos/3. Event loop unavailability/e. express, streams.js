@@ -17,7 +17,7 @@ app.use(morgan('dev'));
 app.get('/', function(req, res) {
   res.send('<html><body>' +
     '<pre>curl -XPOST --header \'Content-Type: application/json\'' +
-      ' -T \'demos/3. Event loop unavailability/data/(huge|big|small).json\'' +
+      ' -T \'demos/3. Event loop unavailability/data/(huge|large|small).json\'' +
       ' localhost:' + port + '/uploadData</pre>' +
     '<pre>curl localhost:' + port + '/downloadData</pre>' +
     '</body></html>');
