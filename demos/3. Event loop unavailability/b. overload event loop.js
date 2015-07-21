@@ -49,8 +49,8 @@ var launchTasks = function() {
     tasks.push(doTask);
   }
 
-  async.parallel(tasks, function(err, result) {
-    // console.log('got results!', result);
+  async.parallel(tasks, function() {
+    // console.log('launchTasks: tasks complete!');
   });
 };
 
@@ -74,7 +74,7 @@ var go = function() {
       // events coming in while event loop blocked
       var delta = now.getTime() - previous.getTime();
       count = Math.floor(delta / LAUNCH_DELAY);
-      // console.log('catch-up multipler:', count)
+      // console.log('go: catch-up multipler:', count)
     }
     for (var i = 0; i < count; i+= 1) {
       launchTasks();
