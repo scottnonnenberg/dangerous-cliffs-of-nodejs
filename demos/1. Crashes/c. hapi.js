@@ -7,7 +7,9 @@ var _ = require('lodash');
 var Hapi = require('hapi');
 var Boom = require('boom');
 
-var server = new Hapi.Server();
+var server = new Hapi.Server({
+  minimal: true
+});
 
 server.on('request-error', function(event, err) {
   if (err.isDeveloperError) {

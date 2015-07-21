@@ -5,7 +5,9 @@ var fs = require('fs');
 var Hapi = require('hapi');
 
 
-var server = new Hapi.Server();
+var server = new Hapi.Server({
+  minimal: true
+});
 
 server.connection({
   port: 3000

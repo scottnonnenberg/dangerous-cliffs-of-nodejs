@@ -1,10 +1,12 @@
 
 'use strict';
 
-var express = require('express');
-var app = express();
-
 var fs = require('fs');
+
+var express = require('express');
+
+
+var app = express();
 
 app.get('/', function(req, res) {
   res.send('<html><body>' +
@@ -46,6 +48,7 @@ app.get('/asyncCrash', function(req, res) {
   });
 });
 
+
 // register error handler
 app.use(function(err, req, res, next) {
   console.log('express error handler run!', err.stack);
@@ -59,6 +62,7 @@ process.on('uncaughtException', function(err) {
   console.log('Top-level exception!', err.stack);
   process.exit();
 })
+
 
 var port = 3000;
 app.listen(port, function() {
