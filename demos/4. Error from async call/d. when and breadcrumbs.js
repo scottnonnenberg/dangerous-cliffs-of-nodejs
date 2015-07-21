@@ -87,7 +87,7 @@ var multistep = module.exports = function() {
       // do domain-specific stuff
     })
     .catch(function(err) {
-      breadcrumbs.add(err);
+      breadcrumbs.add(err, null, {userId: 5, command: 'save'});
       return when.reject(err);
     });
 };
