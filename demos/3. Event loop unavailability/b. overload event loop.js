@@ -60,9 +60,12 @@ var writeStatus = function() {
   console.log('lag:', toobusy.lag());
   console.log(' concurrent:', concurrent);
   console.log('  completed:', completed);
-  console.log('   rejected:', rejected);
   completed = 0;
-  rejected = 0;
+
+  if (REJECT_IF_TOOBUSY) {
+    console.log('   rejected:', rejected);
+    rejected = 0;
+  }
 };
 
 
