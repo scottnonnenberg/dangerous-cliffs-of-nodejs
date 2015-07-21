@@ -4,17 +4,15 @@
 var async = require('async');
 var toobusy = require('toobusy-js');
 
-// all in milliseconds
-
+// start: 10 = 100 requests/second
+// try this: 5 = 200 requests/second
 var LAUNCH_DELAY = 10;
-  // start: 10 = 100 requests/second
-  // try this: 5 = 200 requests/second
 var EXPANSION = 1;
 var TASK_DELAY = 20;
 var SYNC_WORK = 10;
 
+// then: turn this on, see if it helps
 var REJECT_IF_TOOBUSY = false;
-  // then: turn this on, see if it helps
 
 var concurrent = 0;
 var completed = 0;

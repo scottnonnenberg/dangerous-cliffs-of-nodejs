@@ -70,12 +70,12 @@ var options = {
 server.register({
   register: require('good'),
   options: options
-}, function (err) {
+}, function(err) {
   if (err) {
     console.error(err.stack);
   }
   else {
-    server.start(function () {
+    server.start(function() {
       console.info('Server started at ' + server.info.uri);
     });
   }

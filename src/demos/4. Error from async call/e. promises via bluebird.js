@@ -1,14 +1,14 @@
 
 'use strict';
 
-var bluebird = require('bluebird');
+var Bluebird = require('bluebird');
 var _ = require('lodash');
 
 
-bluebird.longStackTraces();
+Bluebird.longStackTraces();
 
 var callRemoteService = function callRemoteService() {
-  return new bluebird(function(resolve, reject) {
+  return new Bluebird(function(resolve, reject) {
     setTimeout(function() {
       if (_.random(0, 10) < 3) {
         return reject(new Error('Incorrect arguments supplied'));
@@ -62,7 +62,7 @@ var multistep = module.exports = function() {
     step5()
   ];
 
-  return bluebird.all(steps)
+  return Bluebird.all(steps)
     .then(function() {
       // do domain-specific stuff
     });
