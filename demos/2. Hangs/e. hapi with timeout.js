@@ -27,6 +27,11 @@ server.route({
 server.route({
   method: 'GET',
   path: '/hang',
+  config: {
+    timeout: {
+      server: 1000
+    }
+  },
   handler: function(request, reply) {
     // no callback!
   }

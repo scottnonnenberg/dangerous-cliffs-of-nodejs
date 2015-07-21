@@ -38,7 +38,7 @@ server.route({
 });
 
 // you do get a log entry for cancelled request:
-// 150717/234654.272, [response], http://rev.local:3000: get /longAsyncTask {} 200 (2004ms)
+// 15717/234654.272, [response], http://rev.local:3000: get /longAsyncTask {} 200 (2004ms)
 
 server.route({
   method: 'GET',
