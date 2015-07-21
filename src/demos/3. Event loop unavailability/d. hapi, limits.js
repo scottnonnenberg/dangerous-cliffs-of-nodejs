@@ -1,7 +1,6 @@
 
 'use strict';
 
-var _ = require('lodash');
 var Hapi = require('hapi');
 
 
@@ -54,7 +53,8 @@ server.route({
     // }
   },
   handler: function(request, reply) {
-    reply({keys: _.keys(request.payload).length});
+    var length = request.payload.values ? request.payload.values.length : 0;
+    reply({length: length});
   }
 });
 

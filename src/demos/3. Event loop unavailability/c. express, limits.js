@@ -1,7 +1,6 @@
 
 'use strict';
 
-var _ = require('lodash');
 var express = require('express');
 var morgan = require('morgan');
 var toobusy = require('toobusy-js');
@@ -39,8 +38,8 @@ app.get('/', function(req, res) {
 });
 
 app.post('/uploadData', function(req, res) {
-  console.log(_.keys(req.body).length);
-  res.send({keys: _.keys(req.body).length});
+  var length = req.body.values ? req.body.values.length : 0;
+  res.send({length: length});
 });
 
 var doSyncWork = function(mil) {

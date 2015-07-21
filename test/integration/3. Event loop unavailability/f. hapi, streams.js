@@ -10,7 +10,7 @@ var supertest = require('supertest');
 
 var startProcess = require('../start_process');
 
-describe('3. Event loop unavailability, c. express, limits', function() {
+describe('3. Event loop unavailability, f. hapi, streams', function() {
   var child, agent;
   var baseDir = path.join(__dirname, '../../../demos/3. Event loop unavailability/');
   var loadData = function(file) {
@@ -20,7 +20,7 @@ describe('3. Event loop unavailability, c. express, limits', function() {
   before(function(done) {
     agent = supertest.agent('http://localhost:3000');
 
-    var entrypoint = path.join(baseDir, 'c. express, limits');
+    var entrypoint = path.join(baseDir, 'f. hapi, streams');
 
     child = startProcess(entrypoint);
 
@@ -43,32 +43,40 @@ describe('3. Event loop unavailability, c. express, limits', function() {
       .expect(200, done);
   });
 
-  it('returns 413 on upload of big file', function(done) {
+  it('returns 200 on upload of big file', function(done) {
     var data = loadData(path.join(baseDir, 'data/big.json'));
 
     agent
       .post('/uploadData')
       .send(data)
-      .expect(413, done);
+      .expect({length: 110})
+      .expect(200, done);
   });
 
-  it('returns 503 after longSyncTask blocks event loop', function(done) {
-    this.timeout(4000);
+  it('returns 200 on upload of huge file', function(done) {
+    var data = loadData(path.join(baseDir, 'data/huge.json'));
 
     agent
-      .get('/longSyncTask')
-      .expect(/complete!/)
-      .expect(200, function(err) {
-        if (err) {
-          done(err);
-        }
-      });
+      .post('/uploadData')
+      .send(data)
+      .expect({length: 6300})
+      .expect(200, done);
+  });
 
-    setTimeout(function() {
-      agent
-        .get('/')
-        .expect(503, done);
-    }, 500);
+  it('download returns 200 and huge.json as it exists on disk', function(done) {
+    var data = loadData(path.join(baseDir, 'data/huge.json'));
+
+    agent
+      .get('/downloadData')
+      .expect('Content-Type', /application\/json/)
+      .expect(200, function(err, res) {
+        if (err) {
+          return done(err);
+        }
+
+        expect(data).to.deep.equal(res.body);
+        done();
+      });
   });
 
   it('process shuts down', function(done) {
@@ -76,8 +84,6 @@ describe('3. Event loop unavailability, c. express, limits', function() {
 
     child.on('close', function() {
       expect(child).to.have.property('result');
-
-      expect(child.result).to.match(/Server too busy/);
 
       done();
     });

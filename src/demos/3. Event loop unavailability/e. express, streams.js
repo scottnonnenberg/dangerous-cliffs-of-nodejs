@@ -1,11 +1,77 @@
 
-// (easy)
-// process a file upload with stream
-// send a file down the wire with stream
+'use strict';
 
-// (medium)
-// classic proxy code?
+var fs = require('fs');
+var path = require('path');
 
-// (hard)
-// process incoming json with stream - parse JSON, maybe even check against schema?
-// example of sending a large database result in JSON with a stream
+var express = require('express');
+var morgan = require('morgan');
+var jsonStream = require('JSONStream');
+
+
+var port = 3000;
+var app = express();
+
+app.use(morgan('dev'));
+
+app.get('/', function(req, res) {
+  res.send('<html><body>' +
+    '<pre>curl -XPOST --header \'Content-Type: application/json\'' +
+      ' -T \'demos/3. Event loop unavailability/data/(huge|big|small).json\'' +
+      ' localhost:' + port + '/uploadData</pre>' +
+    '<pre>curl localhost:' + port + '/downloadData</pre>' +
+    '</body></html>');
+});
+
+app.post('/uploadData', function(req, res) {
+  var length = 0;
+  var parse = jsonStream.parse('values.*');
+
+  // req.on('data', function(chunk) {
+  //   console.log('raw chunk:' + chunk.toString());
+  // });
+
+  req.on('end', function() {
+    res.send({length: length});
+  });
+
+  parse.on('data', function(data) {
+    /* jshint unused: false */
+    // console.log('data:', data);
+    length += 1;
+  });
+
+  req.pipe(parse);
+});
+
+// Note: not the ideal way to serve files; this is just showing a streamed response
+// Better: CDNs, nginx, express static middleware, res.download(), etc.
+
+app.get('/downloadData', function(req, res) {
+  var file = path.join(__dirname, 'data/huge.json');
+  var readStream = fs.createReadStream(file);
+
+  // readStream.on('data', function(chunk) {
+  //   console.log('raw chunk:', chunk.toString());
+  // });
+
+  res.type('json');
+
+  readStream.pipe(res);
+});
+
+// register error handler
+app.use(function(err, req, res, next) {
+  /* jshint unused: false */
+  // express error handlers need arity of four
+
+  console.log('express error handler run!', err.stack);
+  res.status(err.statusCode || 500);
+  res.type('text');
+  res.send('express error handler ' + err.stack);
+});
+
+
+app.listen(port, function() {
+  console.log('express server listening on port 3000');
+});

@@ -40,7 +40,7 @@ describe('3. Event loop unavailability, d. hapi, limits', function() {
     agent
       .post('/uploadData')
       .send(data)
-      .expect({keys: 1})
+      .expect({length: 1})
       .expect(200, done);
   });
 
