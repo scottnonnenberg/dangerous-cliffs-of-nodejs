@@ -21,6 +21,20 @@ describe('1. Crashes, a. express', function() {
     setTimeout(done, 1000);
   });
 
+  it('returns 200 for root', function(done) {
+    agent
+      .get('/')
+      .expect(200, done);
+  });
+
+  it('returns error for crash in route handler', function(done) {
+    agent
+      .get('/normalError')
+      .expect(/express error handler/)
+      .expect(/Something went wrong/)
+      .expect(500, done);
+  });
+
   it('returns error for crash in route handler', function(done) {
     agent
       .get('/handlerCrash')

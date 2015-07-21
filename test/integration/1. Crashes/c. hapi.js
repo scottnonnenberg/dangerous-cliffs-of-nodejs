@@ -21,6 +21,19 @@ describe('1. Crashes, c. hapi', function() {
     setTimeout(done, 1000);
   });
 
+  it('returns 200 for root', function(done) {
+    agent
+      .get('/')
+      .expect(200, done);
+  });
+
+  it('returns error for crash in route handler', function(done) {
+    agent
+      .get('/normalError')
+      .expect(/Something went wrong/)
+      .expect(422, done);
+  });
+
   it('returns error for crash in route handler, shuts down', function(done) {
     agent
       .get('/handlerCrash')
@@ -34,7 +47,7 @@ describe('1. Crashes, c. hapi', function() {
     child.on('close', function() {
       expect(child).to.have.property('result');
 
-      expect(child.result).to.match(/crash! shutting down!/);
+      expect(child.result).to.match(/Crash! Shutting down gracefully!/);
 
       done();
     });
@@ -67,7 +80,7 @@ describe('1. Crashes, c. hapi', function() {
     child.on('close', function() {
       expect(child).to.have.property('result');
 
-      expect(child.result).to.match(/crash! shutting down!/);
+      expect(child.result).to.match(/Crash! Shutting down gracefully!/);
 
       done();
     });
