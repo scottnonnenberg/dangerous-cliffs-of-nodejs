@@ -30,9 +30,10 @@ server.route({
   path: '/',
   handler: function(request, reply) {
     reply('<html><body>' +
-        '<pre>curl -XPOST --header \'Content-Type: application/json\'' +
-        ' -T \'demos/3. Event loop unavailability/data/(big|small).json\'' +
-        ' localhost:3000/uploadData</pre>' +
+      '<div><a href="/longSyncTask">/longSyncTask - open a few tabs; 503!</a></div>' +
+      '<pre>curl -XPOST --header \'Content-Type: application/json\'' +
+      ' -T \'demos/3. Event loop unavailability/data/(big|small).json\'' +
+      ' ' + server.info.uri + '/uploadData</pre>' +
       '</body></html>');
   }
 });
@@ -54,6 +55,28 @@ server.route({
   },
   handler: function(request, reply) {
     reply(request.payload);
+  }
+});
+
+var doSyncWork = function(mil) {
+  var start = new Date();
+  var now = new Date();
+
+  console.log('doSyncWork: start');
+  while (now.getTime() - start.getTime() < mil) {
+    now = new Date();
+  }
+  console.log('doSyncWork: done');
+};
+
+server.route({
+  method: 'GET',
+  path: '/longSyncTask',
+  handler: function(request, reply) {
+    doSyncWork(2000);
+
+    reply('complete!')
+      .type('text/plain');
   }
 });
 

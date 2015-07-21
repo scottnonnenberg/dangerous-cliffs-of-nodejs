@@ -31,14 +31,32 @@ app.use(bodyParser.json({
 
 app.get('/', function(req, res) {
   res.send('<html><body>' +
+    '<div><a href="/longSyncTask">/longSyncTask - open a few tabs; 503!</a></div>' +
     '<pre>curl -XPOST --header \'Content-Type: application/json\'' +
       ' -T \'demos/3. Event loop unavailability/data/(big|small).json\'' +
-      ' localhost:3000/uploadData</pre>' +
+      ' localhost:' + port + '/uploadData</pre>' +
     '</body></html>');
 });
 
 app.post('/uploadData', function(req, res) {
   res.send(req.body);
+});
+
+var doSyncWork = function(mil) {
+  var start = new Date();
+  var now = new Date();
+
+  console.log('doSyncWork: start');
+  while (now.getTime() - start.getTime() < mil) {
+    now = new Date();
+  }
+  console.log('doSyncWork: done');
+};
+
+app.get('/longSyncTask', function(req, res) {
+  doSyncWork(2000);
+  res.type('text');
+  res.send('complete!');
 });
 
 // register error handler
