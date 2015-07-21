@@ -1,1 +1,2 @@
-b. choke remote service.js
+
+'use strict';

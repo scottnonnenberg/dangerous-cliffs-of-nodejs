@@ -1,8 +1,6 @@
 
 'use strict';
 
-var fs = require('fs');
-
 var express = require('express');
 var morgan = require('morgan');
 
@@ -24,7 +22,7 @@ app.get('/', function(req, res) {
 // log entries for hangs have no timing:
 // GET /hang - - ms - -
 
-app.get('/hang', function(req, res) {
+app.get('/hang', function() {
   // no callback!
 });
 
@@ -41,7 +39,7 @@ app.get('/longAsyncTask', function(req, res) {
   setTimeout(function() {
     console.log('long task: done!');
     res.type('text');
-    res.send('success!')
+    res.send('success!');
   }, 2000);
 });
 

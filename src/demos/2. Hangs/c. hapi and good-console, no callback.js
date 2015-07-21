@@ -1,7 +1,6 @@
 
 'use strict';
 
-var fs = require('fs');
 var Hapi = require('hapi');
 
 
@@ -32,7 +31,7 @@ server.route({
 server.route({
   method: 'GET',
   path: '/hang',
-  handler: function(request, reply) {
+  handler: function() {
     // no callback!
   }
 });

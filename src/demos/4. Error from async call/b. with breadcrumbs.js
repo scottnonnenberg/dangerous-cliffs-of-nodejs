@@ -17,7 +17,7 @@ var callRemoteService = function callRemoteService(cb) {
 };
 
 var step1 = function step1(cb) {
-  callRemoteService(function(err, result) {
+  callRemoteService(function(err) {
     if (breadcrumbs.add(err, cb)) {
       return;
     }
@@ -28,7 +28,7 @@ var step1 = function step1(cb) {
 };
 
 var step2 = function step2(cb) {
-  callRemoteService(function(err, result) {
+  callRemoteService(function(err) {
     if (breadcrumbs.add(err, cb)) {
       return;
     }
@@ -39,7 +39,7 @@ var step2 = function step2(cb) {
 };
 
 var step3 = function step3(cb) {
-  callRemoteService(function(err, result) {
+  callRemoteService(function(err) {
     if (breadcrumbs.add(err, cb)) {
       return;
     }
@@ -50,7 +50,7 @@ var step3 = function step3(cb) {
 };
 
 var step4 = function step4(cb) {
-  callRemoteService(function(err, result) {
+  callRemoteService(function(err) {
     if (breadcrumbs.add(err, cb)) {
       return;
     }
@@ -61,7 +61,7 @@ var step4 = function step4(cb) {
 };
 
 var step5 = function step5(cb) {
-  callRemoteService(function(err, result) {
+  callRemoteService(function(err) {
     if (breadcrumbs.add(err, cb)) {
       return;
     }
@@ -78,7 +78,7 @@ var multistep = module.exports = function(cb) {
     step3,
     step4,
     step5
-  ], function(err, result) {
+  ], function(err) {
     if (breadcrumbs.add(err, cb, {userId: 5, command: 'save'})) {
       return;
     }

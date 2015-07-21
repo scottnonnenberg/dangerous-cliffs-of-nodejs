@@ -1,8 +1,6 @@
 
 'use strict';
 
-var fs = require('fs');
-
 var _ = require('lodash');
 var Hapi = require('hapi');
 

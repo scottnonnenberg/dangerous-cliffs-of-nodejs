@@ -1,14 +1,9 @@
 
 'use strict';
 
-var path = require('path');
-
 var test = require('thehelp-test');
 var expect = test.expect;
-var supertest = require('supertest');
 var core = require('thehelp-core');
-
-var startProcess = require('../start_process');
 
 var withBreadcrumbs =
   require('../../../demos/4. Error from async call/b. with breadcrumbs');
@@ -17,7 +12,7 @@ var withBreadcrumbs =
 describe('4. Error from async call, a. with breadcrumbs', function() {
 
   it('error includes the step function name', function(done) {
-    withBreadcrumbs(function(err, result) {
+    withBreadcrumbs(function(err) {
 
       expect(err).to.have.property('stack');
 

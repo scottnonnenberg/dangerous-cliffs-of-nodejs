@@ -90,7 +90,7 @@ var go = function() {
 
     go();
 
-  }, LAUNCH_DELAY)
+  }, LAUNCH_DELAY);
 };
 
 go();

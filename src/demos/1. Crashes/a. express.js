@@ -21,7 +21,7 @@ app.get('/normalError', function(req, res, next) {
   next(new Error('Something went wrong!'));
 });
 
-app.get('/handlerCrash', function(req, res) {
+app.get('/handlerCrash', function() {
   var x = 4;
   x.split();
 });
@@ -38,19 +38,22 @@ app.get('/longAsyncTask', function(req, res) {
   setTimeout(function() {
     console.log('long task: done!');
     res.type('text');
-    res.send('success!')
+    res.send('success!');
   }, 2000);
 });
 
 app.get('/asyncCrash', function(req, res) {
   fs.readFile('nonexistent', function(err, result) {
-    var length = result.length;
+    res.send(result.length);
   });
 });
 
 
 // register error handler
 app.use(function(err, req, res, next) {
+  /* jshint unused: false */
+  // express error handlers need arity of four
+
   console.log('express error handler run!', err.stack);
   res.status(500);
   res.type('text');
@@ -61,7 +64,7 @@ app.use(function(err, req, res, next) {
 process.on('uncaughtException', function(err) {
   console.log('Top-level exception!', err.stack);
   process.exit();
-})
+});
 
 
 var port = 3000;

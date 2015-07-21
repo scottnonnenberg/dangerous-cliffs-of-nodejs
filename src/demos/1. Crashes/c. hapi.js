@@ -2,7 +2,6 @@
 'use strict';
 
 var fs = require('fs');
-var _ = require('lodash');
 
 var Hapi = require('hapi');
 var Boom = require('boom');
@@ -19,7 +18,7 @@ server.on('request-error', function(event, err) {
 });
 
 process.on('SIGTERM', function() {
-  console.log('SIGTERM! Shutting down gracefully!')
+  console.log('SIGTERM! Shutting down gracefully!');
   server.stop();
 });
 
@@ -51,7 +50,7 @@ server.route({
 server.route({
   method: 'GET',
   path: '/handlerCrash',
-  handler: function(request, reply) {
+  handler: function() {
     var x = 4;
     x.split();
   }
@@ -81,7 +80,7 @@ server.route({
   path: '/asyncCrash',
   handler: function(request, reply) {
     fs.readFile('nonexistent', function(err, result) {
-      var length = result.length;
+      reply(result.length);
     });
   }
 });

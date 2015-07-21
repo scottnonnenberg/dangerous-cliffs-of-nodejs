@@ -63,7 +63,7 @@ var multistep = module.exports = function() {
   ];
 
   return bluebird.all(steps)
-    .then(function(result) {
+    .then(function() {
       // do domain-specific stuff
     });
 };

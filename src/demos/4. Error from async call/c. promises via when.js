@@ -61,7 +61,7 @@ var multistep = module.exports = function() {
   ];
 
   return when.all(steps)
-    .then(function(result) {
+    .then(function() {
       // do domain-specific stuff
     });
 };

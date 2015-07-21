@@ -2,7 +2,6 @@
 'use strict';
 
 var fs = require('fs');
-var toobusy = require('toobusy-js');
 
 
 var doSyncWork = function() {
@@ -21,7 +20,7 @@ var getFile = function() {
   console.log('getFile: start');
   fs.readFile('nonexistent', function() {
     var now = new Date();
-    var delta = now.getTime() - start.getTime()
+    var delta = now.getTime() - start.getTime();
     console.log('getFile: done,', delta + 'ms');
   });
 };
@@ -40,12 +39,12 @@ var writeInterval = function() {
 
 setInterval(writeInterval, 100);
 
-setTimeout(getFile, 250)
+setTimeout(getFile, 250);
 
 setTimeout(function() {
   getFile();
   doSyncWork();
-}, 500)
+}, 500);
 
 setTimeout(function() {
   process.exit();

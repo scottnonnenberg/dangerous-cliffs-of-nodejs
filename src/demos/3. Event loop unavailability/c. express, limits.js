@@ -1,8 +1,6 @@
 
 'use strict';
 
-var fs = require('fs');
-
 var _ = require('lodash');
 var express = require('express');
 var morgan = require('morgan');
@@ -11,6 +9,7 @@ var createError = require('http-errors');
 var bodyParser = require('body-parser');
 
 
+var port = 3000;
 var app = express();
 
 app.use(morgan('dev'));
@@ -63,6 +62,9 @@ app.get('/longSyncTask', function(req, res) {
 
 // register error handler
 app.use(function(err, req, res, next) {
+  /* jshint unused: false */
+  // express error handlers need arity of four
+
   console.log('express error handler run!', err.stack);
   res.status(err.statusCode || 500);
   res.type('text');
@@ -70,7 +72,6 @@ app.use(function(err, req, res, next) {
 });
 
 
-var port = 3000;
 app.listen(port, function() {
   console.log('express server listening on port 3000');
 });

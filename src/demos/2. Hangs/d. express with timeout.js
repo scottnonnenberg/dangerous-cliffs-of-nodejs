@@ -1,8 +1,6 @@
 
 'use strict';
 
-var fs = require('fs');
-
 var express = require('express');
 var morgan = require('morgan');
 var timeout = require('connect-timeout');
@@ -15,11 +13,11 @@ app.use(morgan('dev'));
 
 var render = function(req, res, data) {
   if (req.timedout) {
-    console.log('not rendering; request already timed out')
+    console.log('not rendering; request already timed out');
   }
   else {
     res.type('text');
-    res.send(data)
+    res.send(data);
   }
 };
 
@@ -30,7 +28,7 @@ app.get('/', function(req, res) {
     '</body></html>');
 });
 
-app.get('/hang', function(req, res) {
+app.get('/hang', function() {
   // no callback!
 });
 

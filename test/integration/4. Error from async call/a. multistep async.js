@@ -1,21 +1,17 @@
 
 'use strict';
 
-var path = require('path');
-
 var test = require('thehelp-test');
 var expect = test.expect;
-var supertest = require('supertest');
 var core = require('thehelp-core');
 
-var startProcess = require('../start_process');
-
 var multistep = require('../../../demos/4. Error from async call/a. multistep async');
+
 
 describe('4. Error from async call, a. multistep async', function() {
 
   it('returns an error', function(done) {
-    multistep(function(err, result) {
+    multistep(function(err) {
 
       expect(err).to.have.property('stack');
 

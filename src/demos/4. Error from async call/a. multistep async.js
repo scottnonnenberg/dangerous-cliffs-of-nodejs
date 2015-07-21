@@ -15,7 +15,7 @@ var callRemoteService = function callRemoteService(cb) {
 };
 
 var step1 = function step1(cb) {
-  callRemoteService(function(err, result) {
+  callRemoteService(function(err) {
     if (err) {
       return cb(err);
     }
@@ -26,7 +26,7 @@ var step1 = function step1(cb) {
 };
 
 var step2 = function step2(cb) {
-  callRemoteService(function(err, result) {
+  callRemoteService(function(err) {
     if (err) {
       return cb(err);
     }
@@ -37,7 +37,7 @@ var step2 = function step2(cb) {
 };
 
 var step3 = function step3(cb) {
-  callRemoteService(function(err, result) {
+  callRemoteService(function(err) {
     if (err) {
       return cb(err);
     }
@@ -48,7 +48,7 @@ var step3 = function step3(cb) {
 };
 
 var step4 = function step3(cb) {
-  callRemoteService(function(err, result) {
+  callRemoteService(function(err) {
     if (err) {
       return cb(err);
     }
@@ -59,7 +59,7 @@ var step4 = function step3(cb) {
 };
 
 var step5 = function step3(cb) {
-  callRemoteService(function(err, result) {
+  callRemoteService(function(err) {
     if (err) {
       return cb(err);
     }
@@ -76,7 +76,7 @@ var multistep = module.exports = function(cb) {
     step3,
     step4,
     step5
-  ], function(err, result) {
+  ], function(err) {
     if (err) {
       return cb(err);
     }
@@ -88,7 +88,7 @@ var multistep = module.exports = function(cb) {
 };
 
 if (require.main === module) {
-  multstep(function(err) {
+  multistep(function(err) {
     console.log(err.stack);
   });
 }
