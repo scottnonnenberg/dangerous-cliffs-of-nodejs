@@ -2,6 +2,7 @@
 'use strict';
 
 var Hapi = require('hapi');
+var Hoek = require('hoek');
 
 
 var server = new Hapi.Server({
@@ -53,7 +54,7 @@ server.route({
     // }
   },
   handler: function(request, reply) {
-    var length = request.payload.values ? request.payload.values.length : 0;
+    var length = Hoek.reach(request, 'payload.values.length' || 0);
     reply({length: length});
   }
 });
