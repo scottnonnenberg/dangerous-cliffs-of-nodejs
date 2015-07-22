@@ -22,6 +22,8 @@ var BIND = 'localhost';
 var concurrent = 0;
 var completed = 0;
 var rejected = 0;
+var sockets = [];
+
 
 var doSyncWork = function() {
   var start = new Date();
@@ -63,7 +65,6 @@ var server = http.createServer(function(req, res) {
   });
 });
 
-var sockets = [];
 server.on('connection', function(socket) {
   if (_.contains(sockets, socket)) {
     return;
