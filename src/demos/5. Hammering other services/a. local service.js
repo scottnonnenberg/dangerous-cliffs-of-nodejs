@@ -5,6 +5,11 @@ var http = require('http');
 
 var superagent = require('superagent');
 
+// pay attention to:
+//   1. number of concurrent tasks locally vs. remotely, and the trends for each side
+//   2. number of active sockets on remote server
+//      (most sites/APIs on the internet won't take kindly to 1000 open sockets)
+
 
 var host = 'http://localhost:3000';
 
