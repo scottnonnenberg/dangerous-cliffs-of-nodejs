@@ -9,7 +9,7 @@ var toobusy = require('toobusy-js');
 var LAUNCH_DELAY = 10;
 var EXPANSION = 1;
 var TASK_DELAY = 20;
-var SYNC_WORK = 10;
+var SYNC_WORK = 8;
 
 // then: turn this on, see if it helps
 var REJECT_IF_TOOBUSY = false;
