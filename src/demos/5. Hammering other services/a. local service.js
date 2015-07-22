@@ -20,10 +20,10 @@ var RECENT_ERROR_DELAY = 2000;
 // set to non-zero to limit concurrent requests
 var MAX_CONCURRENT = 0;
 
-// tune the behavior of sockets with these options
-//   https://iojs.org/api/http.html#http_new_agent_options
+// use these to tune the behavior of the sockets created (currently set to the defaults)
+// details: https://iojs.org/api/http.html#http_new_agent_options
 var agent = new http.Agent({
-  maxSockets: 20,
+  maxSockets: Infinity,
   keepAlive: false,
   keepAliveBoolean: false,
   keepAliveMsecs: 1000
