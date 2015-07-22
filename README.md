@@ -1,15 +1,24 @@
 dangerous-cliffs-of-nodejs
 ===========================
 
-A talk about some of the key things to keep in mind when readying a node.js service for production.
+A talk about some of the key things to keep in mind when readying a Node.js service for production.
 
 You don't have to pull this repo down to view the slides, thanks to GitHub pages. Bam! [http://scottnonnenberg.github.io/dangerous-cliffs-of-nodejs/dist/slides.html]
 
-But if you want to pull it local, it's ready to go without any changes. Just open dist/slides.html in your browser.
+If you want to pull it local, it is ready to go without any changes. Just open `dist/slides.html` in your local browser. _Note:_ The speaker notes view doesn't work when accessing slides via `file://` URL.
 
-## making changes
+## Running the Demos
 
-### getting set up
+```bash
+npm install -- production # saves 59MB in node_modules!
+node demos/1.\ Crashes/a.\ express.js
+```
+
+You're off and running!
+
+## Making changes
+
+### Getting set up
 
 ```bash
 npm install
@@ -23,7 +32,7 @@ npm install -g grunt # (if you don't already have it)
 grunt jade
 ```
 
-### compile as you edit!
+### Compile as you edit!
 
 ```
 grunt watch:jade
