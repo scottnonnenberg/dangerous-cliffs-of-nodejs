@@ -77,9 +77,13 @@ server.on('connection', function(socket) {
   });
 });
 
-server.listen(PORT, BIND);
+server.listen(PORT, BIND, function(err) {
+  if (err) {
+    throw err;
+  }
 
-console.log('Server running at http://' + BIND + ':' + PORT + '/');
+  console.log('Server running at http://' + BIND + ':' + PORT + '/');
+});
 
 
 var writeStatus = function() {
