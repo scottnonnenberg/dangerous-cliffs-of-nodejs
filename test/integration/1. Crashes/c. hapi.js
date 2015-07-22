@@ -64,7 +64,11 @@ describe('1. Crashes, c. hapi', function() {
     agent
       .get('/longAsyncTask')
       .expect('success!')
-      .expect(200, done);
+      .expect(200, function(err) {
+        if (err) {
+          done(err);
+        }
+      });
 
     agent
       .get('/asyncCrash')
@@ -74,9 +78,7 @@ describe('1. Crashes, c. hapi', function() {
           done(err);
         }
       });
-  });
 
-  it('process shuts down afterwards', function(done) {
     child.on('close', function() {
       expect(child).to.have.property('result');
 
