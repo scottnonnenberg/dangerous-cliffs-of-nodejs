@@ -91,9 +91,17 @@ html(lang='en')
             h2 HaikuDeck
             h2 MuleSoft
 
+          section
+            h2 Classic ASP
+            h2 C++
+            h2 Java
+            h2 .NET
+            h2 iOS
+            h2 Ruby on Rails
+
         section
           section
-            h1 Why am I here?
+            h1 Why this topic?
           
           section
             h1 The gap
@@ -134,7 +142,7 @@ html(lang='en')
                 li Dotting into a null/undefined var
 
           section
-            h1 Demo
+            h1 Demo: Crashes
 
           section
             h1 Benefit?
@@ -144,7 +152,7 @@ html(lang='en')
                 li Took it down to low/medium
 
           section
-            h1 Deployment`
+            h1 Deployment
 
         section
           img.max(src='img/cliff edges are dangerous.jpg')
@@ -154,7 +162,7 @@ html(lang='en')
             h1 Hangs
 
           section
-            h1 Demo
+            h1 Demo: Hangs
 
           section
             h1 Benefit?
@@ -179,7 +187,7 @@ html(lang='en')
             h1 Event loop unavailability
   
           section
-            h1 Demo
+            h1 Demo: Event loop
 
           section
             h1 Benefit?
@@ -189,40 +197,6 @@ html(lang='en')
               ul
                 li no magic solution for event loop that's slowing down
                 li best we can do is try to plan for it, and monitor closely
-
-          section
-            h2 Know your libraries!
-            ul
-              li 
-                a(href='https://mongodb.github.io/node-mongodb-native/driver-articles/mongoclient.html#connection-pool-configuration') mongodb
-                |  - connection pool, default size of 5
-              li
-                a(href='https://github.com/brianc/node-postgres/wiki/pg#pgdefaultspoolsize') pg
-                |  - connection pool, default size of 10
-              li
-                a(href='https://github.com/felixge/node-mysql/#pool-options') mysql
-                |  - connection pool, default size of 10
-              li
-                a(href='https://github.com/NodeRedis/node_redis/blob/master/examples/backpressure_drain.js') redis
-                |  - queues up extra commands
-
-        //- section
-        //-   img.max(src='img/sheer unstable cliffs.jpg')
-
-        //- section
-        //-   section
-        //-     h1 Hammering other services
-  
-        //-   section
-        //-     h1 Demo
-
-        //-   section
-        //-     h1 Benefit?
-        //-     h1 Prevention
-        //-     aside.notes
-        //-       ul
-        //-         li let's be nice, everyone.
-        //-         li node.js is really good at parallelizing, some aren't
 
         section
           img.max(src='img/steep and crumbling cliffs.jpg')
@@ -268,74 +242,108 @@ html(lang='en')
           h1 Questions?
 
         section
-          h2 Image sources
-          ul
-            li "huashin trail"
-            li "beware dangerous cliff"
-            li "cliff edges are dangerous"
-            li "dangerous cliffs"
-            li "sheer unstable cliffs"
-            li "steep and crumbling cliffs"
-            li "rocky trail"
+          img.max(src='img/sheer unstable cliffs.jpg')
 
         section
           section
-            h1 Resources
-          
+            h1 Hammering other services
+  
           section
-            h2 prevention
-            ul
-              li testing: mocha, sinon, chai, supertest, vows, intern, assert, etc.
-              li code coverage: istanbul, blanket
-              li static analysis: jshint, eslint, js-complexity, jscs
-              li thehelp-project gets things in place quick
-          
-          section
-            h2 impact mitigation
-            ul
-              li graceful shutdown: thehelp-cluster
-              li throttling when busy: toobusy
-              li TODO: module? concurrency limits
-              li TODO: module? payload size limits
+            h1 Demo
 
           section
-            h2 deployment
-            ul
-              li git push (heroku-style), docker, ansible, capistrano
-              li graceful shutdown: thehelp-cluster
+            h1 Benefit?
+            h1 Everyone's Happy
+            aside.notes
+              ul
+                li let's be nice, everyone.
+                li node.js is really good at parallelizing, some aren't
 
-          section
-            h2 detection
-            ul
-              li slow event loop: toobusy
-              li multi-format error capture: thehelp-last-ditch
-              li stats: graphite
-              li logging: winston, bunyan, thehelp-log-shim, ELK stack
+        section
+          h2 Image sources
+          ul
+            li huashin trail
+            li beware dangerous cliff
+            li cliff edges are dangerous
+            li dangerous cliffs
+            li sheer unstable cliffs
+            li steep and crumbling cliffs
+            li rocky trail
+
+        section
+          h2 Know your libraries!
+          ul
+            li 
+              a(href='https://mongodb.github.io/node-mongodb-native/driver-articles/mongoclient.html#connection-pool-configuration') mongodb
+              |  - connection pool, default size of 5
+            li
+              a(href='https://github.com/brianc/node-postgres/wiki/pg#pgdefaultspoolsize') pg
+              |  - connection pool, default size of 10
+            li
+              a(href='https://github.com/felixge/node-mysql/#pool-options') mysql
+              |  - connection pool, default size of 10
+            li
+              a(href='https://github.com/NodeRedis/node_redis/blob/master/examples/backpressure_drain.js') redis
+              |  - queues up extra commands
+
+        //- section
+        //-   section
+        //-     h1 Resources
+          
+        //-   section
+        //-     h2 prevention
+        //-     ul
+        //-       li testing: mocha, sinon, chai, supertest, vows, intern, assert, etc.
+        //-       li code coverage: istanbul, blanket
+        //-       li static analysis: jshint, eslint, js-complexity, jscs
+        //-       li thehelp-project gets things in place quick
+          
+        //-   section
+        //-     h2 impact mitigation
+        //-     ul
+        //-       li graceful shutdown: thehelp-cluster
+        //-       li throttling when busy: toobusy
+        //-       li TODO: module? concurrency limits
+        //-       li TODO: module? payload size limits
+
+        //-   section
+        //-     h2 deployment
+        //-     ul
+        //-       li git push (heroku-style), docker, ansible, capistrano
+        //-       li graceful shutdown: thehelp-cluster
+
+        //-   section
+        //-     h2 detection
+        //-     ul
+        //-       li slow event loop: toobusy
+        //-       li multi-format error capture: thehelp-last-ditch
+        //-       li stats: graphite
+        //-       li logging: winston, bunyan, thehelp-log-shim, ELK stack
             
-          section
-            h2 debuggability
-            ul
-              li promises (like when), thehelp-core/breadcrumbs
-              li logging: winston, bunyan, thehelp-log-shim, ELK stack
+        //-   section
+        //-     h2 debuggability
+        //-     ul
+        //-       li promises (like when), thehelp-core/breadcrumbs
+        //-       li logging: winston, bunyan, thehelp-log-shim, ELK stack
 
-          section
-            h2 hangs: downstream impact
-            ul.spacer
-              li
-                strong Chrome
-                |  - error message after 2 minutes
-              li
-                strong nginx
-                |  - default timeout of 60 seconds
-              li
-                strong Firefox
-                |  - tbd
-              li
-                strong Safari
-                |  - tbd desktop, tbd mobile
-              li
-                strong IE?
-                |  - tbd
+        //-   section
+        //-     h2 hangs: downstream impact
+        //-     ul.spacer
+        //-       li
+        //-         strong Chrome
+        //-         |  - error message after 2 minutes
+        //-       li
+        //-         strong nginx
+        //-         |  - default timeout of 60 seconds
+        //-       li
+        //-         strong Firefox
+        //-         |  - tbd
+        //-       li
+        //-         strong Safari
+        //-         |  - tbd desktop, tbd mobile
+        //-       li
+        //-         strong IE?
+        //-         |  - tbd
 
     script(src='js/head.min.js')
     script(src='js/reveal.min.js')
