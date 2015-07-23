@@ -26,7 +26,13 @@ app.get('/handlerCrash', function() {
   x.split();
 });
 
-// try `sudo kill <pid>` while this process is running!
+app.get('/asyncCrash', function(req, res) {
+  fs.readFile('nonexistent', function(err, result) {
+    res.send(result.length);
+  });
+});
+
+// try `sudo kill <pid>` while this endpoint is running!
 
 app.get('/longAsyncTask', function(req, res) {
   console.log('long task: start');
@@ -41,13 +47,6 @@ app.get('/longAsyncTask', function(req, res) {
     res.send('success!');
   }, 2000);
 });
-
-app.get('/asyncCrash', function(req, res) {
-  fs.readFile('nonexistent', function(err, result) {
-    res.send(result.length);
-  });
-});
-
 
 // register error handler
 app.use(function(err, req, res, next) {

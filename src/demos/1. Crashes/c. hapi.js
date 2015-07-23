@@ -56,7 +56,17 @@ server.route({
   }
 });
 
-// try `sudo kill <pid>` while this process is running!
+server.route({
+  method: 'GET',
+  path: '/asyncCrash',
+  handler: function(request, reply) {
+    fs.readFile('nonexistent', function(err, result) {
+      reply(result.length);
+    });
+  }
+});
+
+// try `sudo kill <pid>` while this endpoint is running!
 
 server.route({
   method: 'GET',
@@ -75,15 +85,6 @@ server.route({
   }
 });
 
-server.route({
-  method: 'GET',
-  path: '/asyncCrash',
-  handler: function(request, reply) {
-    fs.readFile('nonexistent', function(err, result) {
-      reply(result.length);
-    });
-  }
-});
 
 server.start(function() {
   console.log('Server running at:', server.info.uri);
