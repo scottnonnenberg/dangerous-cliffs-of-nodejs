@@ -64,6 +64,8 @@ var callRemoteService = function() {
       completed += 1;
 
       if (err) {
+        console.log(err.message);
+
         errors += 1;
         recentError = true;
         setTimeout(function() {
