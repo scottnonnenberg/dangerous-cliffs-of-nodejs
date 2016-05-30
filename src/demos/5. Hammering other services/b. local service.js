@@ -25,6 +25,9 @@ var RECENT_ERROR_DELAY = 2000;
 // set to non-zero to limit concurrent requests
 var MAX_CONCURRENT = 0;
 
+// set to non-zero tell superagent to return an error after N milliseconds
+var REQUEST_TIMEOUT = 0;
+
 // use these to tune the behavior of the sockets created (currently set to the defaults)
 // details: https://iojs.org/api/http.html#http_new_agent_options
 var agent = new http.Agent({
@@ -56,6 +59,7 @@ var callRemoteService = function() {
 
   superagent
     .get(host + '/doWork')
+    .timeout(REQUEST_TIMEOUT)
     .agent(agent)
     .end(function(err, res) {
       /* jshint unused: false */
